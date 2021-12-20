@@ -2,6 +2,7 @@
 #include<WinSock2.h>
 
 #include<iostream>
+#include<string>
 #include "DebugView.h"
 #include "TheGreatHelper.h"
 
@@ -37,8 +38,12 @@ int main() {
 
 	SOCKADDR_IN addr;
 	int sizea = sizeof(addr);
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	addr.sin_port = htons(7379);
+	char ip[64];
+	int port;
+	cout << "Input server IP: "; cin >> ip;
+	cout << "Input server port: "; cin >> port;
+	addr.sin_addr.s_addr = inet_addr(ip);
+	addr.sin_port = htons(port);
 	addr.sin_family = AF_INET;
 
 	serverConnect = socket(AF_INET, SOCK_STREAM, NULL);

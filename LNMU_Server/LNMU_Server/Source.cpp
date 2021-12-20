@@ -3,6 +3,8 @@
 
 #include<iostream>
 #include<string>
+#include<WinBase.h>
+#include<fstream>
 #include "DebugView.h"
 
 #pragma warning(disable: 4996)
@@ -28,6 +30,8 @@ void ClientHandler(int index) {
 using namespace std;
 int main() {
 	DebugView act;
+	ifstream fin("settings.txt");
+	ifstream fin1("sign.rs");
 
 	WSAData wsalib_d;
 	WORD DLLVersion = MAKEWORD(1, 3);
@@ -37,11 +41,16 @@ int main() {
 		exit(0);
 	}
 
+	char ip[64];
+	string sign;
+	int port, cot = 0;
+	fin >> ip >> port;
+	getline(fin1, sign);
 
 	SOCKADDR_IN addr;
 	int sizea = sizeof(addr);
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	addr.sin_port = htons(7379);
+	addr.sin_addr.s_addr = inet_addr(ip);
+	addr.sin_port = htons(port);
 	addr.sin_family = AF_INET;
 
 	SOCKET sListen = socket(AF_INET, SOCK_STREAM, NULL);
@@ -60,7 +69,7 @@ int main() {
 		else {
 			cout << act.result[0] << " (connection id = " << i << ")" << endl;
 			char msg[256];
-			strcpy(msg, act.msgs[0].c_str());
+			strcpy(msg, sign.c_str());
 			send(clientCon, msg, sizeof(msg), NULL);
 		}
 
