@@ -23,6 +23,10 @@ void ClientHandler(int index) {
 				if (i == index) continue;
 				send(clients[i], msg, sizeof(msg), NULL);
 			}
+			else {
+				closesocket(clients[i]);
+				WSACleanup();
+			}
 		}
 	}
 }
@@ -44,8 +48,14 @@ int main() {
 	char ip[64];
 	string sign;
 	int port, cot = 0;
-	fin >> ip >> port;
-	getline(fin1, sign);
+	if (!(!fin) && !(!fin1)) {
+		fin >> ip >> port;
+		getline(fin1, sign);
+	}
+	else {
+		cout << "Error: " << act.error[2] << endl;
+		return 3;
+	}
 
 	SOCKADDR_IN addr;
 	int sizea = sizeof(addr);
@@ -57,6 +67,7 @@ int main() {
 	bind(sListen, (SOCKADDR*)&addr, sizeof(addr));
 	listen(sListen, SOMAXCONN);
 	cout << act.result[1] << endl;
+	cout << "IP: " << ip << "; Port: " << port << endl;
 
 	SOCKET clientCon;
 	for (int i = 0; i < 45; i++) {
