@@ -1,0 +1,9 @@
+﻿  DebugView.cpp
+  Source.cpp
+D:\Programming\MyPrograms\LNMU_Client\LNMU_Client\TheGreatHelper.h(12,15): warning C4018: <: несоответствие типов со знаком и без знака
+D:\Programming\MyPrograms\LNMU_Client\LNMU_Client\Source.cpp(29,17): warning C4101: help: неиспользованная локальная переменная
+  Создание кода
+  Previous IPDB not found, fall back to full compilation.
+  All 108 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Создание кода завершено
+  LNMU_Client.vcxproj -> D:\Programming\MyPrograms\LNMU_Client\Release\LNMU_Client.exe
