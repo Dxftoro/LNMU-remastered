@@ -11,7 +11,7 @@
 SOCKET serverConnect;
 
 void ClientHandler() {
-	char msg[1024];
+	char msg[2048];
 	while (true) {
 		recv(serverConnect, msg, sizeof(msg), NULL);
 		if (msg == NULL) {
@@ -55,7 +55,7 @@ int main() {
 
 	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientHandler, NULL, NULL, NULL);
 
-	char clmsg[1024];
+	char clmsg[2048];
 	while (true) {
 		cin.getline(clmsg, sizeof(clmsg));
 		send(serverConnect, clmsg, sizeof(clmsg), NULL);

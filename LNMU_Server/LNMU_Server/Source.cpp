@@ -4,6 +4,7 @@
 #include<iostream>
 #include<string>
 #include<WinBase.h>
+#include<vector>
 #include<fstream>
 #include "DebugView.h"
 
@@ -13,29 +14,49 @@ SOCKET clients[45];
 int CNT = 0;
 
 void ClientHandler(int index) {
-	char msg[1024];
-	
-	while (true) {
-		if (clients[index] != NULL) recv(clients[index], msg, sizeof(msg), NULL);
+	char msg[2048];
 
-		for (int i = 0; i < CNT; i++) {
-			if (clients[i] != NULL) {
-				if (i == index) continue;
+	DebugView act;
+
+	while (true) {
+		if (recv(clients[index], msg, sizeof(msg), NULL) > 0) {
+			for (int i = 0; i < CNT; i++) {
+				if (i == index || clients[i] == INVALID_SOCKET) continue;
 				send(clients[i], msg, sizeof(msg), NULL);
 			}
-			else {
-				closesocket(clients[i]);
-				WSACleanup();
-			}
 		}
+		else {
+			closesocket(clients[index]);
+			clients[index] = INVALID_SOCKET;
+			std::cout << act.result[2] << "(ID: " << index << ")" << std::endl;
+
+			for (int i = index; i < CNT; ++i) {
+				clients[i] = clients[i + 1];
+			}
+			CNT--;
+			for (int i = 0; i < CNT; i++) {
+				if (i != index - 1 || clients[i] != INVALID_SOCKET) {
+					char s = index + '0';
+					std::string announ(act.result[2] + "(ID: " + s + ")");
+					int an_size = announ.size();
+					send(clients[i], (char*)&an_size, sizeof(int), NULL);
+					send(clients[i], announ.c_str(), an_size, NULL);
+				}
+			}
+
+			return;
+		}
+
 	}
+
+	delete[] msg;
 }
 
 using namespace std;
 int main() {
 	DebugView act;
 	ifstream fin("settings.txt");
-	ifstream fin1("sign.rs");
+	ifstream fin1("sign.txt");
 
 	WSAData wsalib_d;
 	WORD DLLVersion = MAKEWORD(1, 3);
@@ -78,7 +99,7 @@ int main() {
 
 		}
 		else {
-			cout << act.result[0] << " (connection id = " << i << ")" << endl;
+			cout << act.result[0] << " (connection ID = " << i << ")" << endl;
 			char msg[256];
 			strcpy(msg, sign.c_str());
 			send(clientCon, msg, sizeof(msg), NULL);
