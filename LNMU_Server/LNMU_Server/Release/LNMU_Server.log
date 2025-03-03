@@ -1,8 +1,0 @@
-﻿  Source.cpp
-D:\Programming\MyPrograms\LNMU_Server\LNMU_Server\Source.cpp(52,14): warning C4154: удаление массива; выполнено преобразование к указателю
-  Создание кода
-  2 of 184 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
-  Создание кода завершено
-  LNMU_Server.vcxproj -> D:\Programming\MyPrograms\LNMU_Server\Release\LNMU_Server.exe
