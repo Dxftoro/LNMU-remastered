@@ -1,4 +1,0 @@
-﻿  Source.cpp
-D:\Programming\MyPrograms\LNMU_Client\LNMU_Client\TheGreatHelper.h(12,15): warning C4018: <: несоответствие типов со знаком и без знака
-D:\Programming\MyPrograms\LNMU_Client\LNMU_Client\Source.cpp(29,17): warning C4101: help: неиспользованная локальная переменная
-  LNMU_Client.vcxproj -> D:\Programming\MyPrograms\LNMU_Client\Debug\LNMU_Client.exe
