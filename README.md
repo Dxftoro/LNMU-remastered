@@ -14,3 +14,6 @@
 >
 ```
 (символы < и > опускаются).
+
+## [RU] Скачивание:
+Бета-версия пакета программ LNMU для Windows доступена для скачивания по этой ссылке: https://github.com/Dxftoro/LNMU-remastered/releases/download/v1.0-beta/LNMU_remastered.zip
