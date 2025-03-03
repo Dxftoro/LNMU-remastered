@@ -1,0 +1,8 @@
+127.0.0.1 27015 16
+
+==== WELCOME TO THE SERVER =====
+//   We are glad to see you   //
+//        in our chat!        //
+//                            //
+//         Have fun!          //
+================================
