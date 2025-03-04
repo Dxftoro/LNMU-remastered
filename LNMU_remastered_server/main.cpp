@@ -61,36 +61,6 @@ bool configurate(std::string& hostname, int& port, size_t& serverSize, std::stri
 	return true;
 }
 
-void tryTellTo(ClientManager* clientManager, const std::string& msg, size_t author) {
-	cout << "Running tell" << endl;
-	std::string name;
-	
-	size_t msgStart = 0;
-	for (size_t i = 1; i < msg.size(); i++) {
-		if (msg[i] == ' ') {
-			msgStart = i + 1;
-			break;
-		}
-		else name += msg[i];
-	}
-
-	size_t target = clientManager->findByName(name);
-	if (target == SIZE_MAX) {
-		std::string warnMsg = "User not found!";
-		Packet packet(serverChatName, warnMsg);
-		clientManager->sendTo(author, (char*)&packet, sizeof(packet), NULL);
-		return;
-	}
-
-	std::string msgText = "";
-	for (size_t i = msgStart; i < msg.size(); i++) {
-		msgText += msg[i];
-	}
-
-	Packet packet(clientManager->getConnection(author).name, msgText);
-	clientManager->sendTo(target, (char*)&packet, sizeof(packet), NULL);
-}
-
 void handleClient(ClientManager* clientManager, SOCKET client, size_t index,
 					CommandHandler* cmd) {
 
