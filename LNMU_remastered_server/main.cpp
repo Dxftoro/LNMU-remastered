@@ -68,7 +68,9 @@ void handleClient(ClientManager* clientManager, SOCKET client, size_t index,
 		Packet packet;
 		if (recv(client, (char*)&packet, sizeof(packet), NULL) > 0) {
 			if (strlen(packet.msg) > 0) {
-				if (packet.msg[0] == '/') cmd->handle(packet.msg, index);
+				if (packet.msg[0] == '/') {
+					cmd->handle(packet.msg, index);
+				}
 				else clientManager->sendAll((char*)&packet, sizeof(packet), NULL, index);
 			}
 		}
