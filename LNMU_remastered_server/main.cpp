@@ -123,7 +123,10 @@ int main() {
 	size_t addrSize = sizeof(addr);
 
 	SOCKET listeningSocket = socket(AF_INET, SOCK_STREAM, NULL);
-	bind(listeningSocket, (SOCKADDR*)&addr, addrSize);
+	if (bind(listeningSocket, (SOCKADDR*)&addr, addrSize) != 0) {
+		cout << "BINDING ERROR " << WSAGetLastError() << endl;
+		return -1;
+	}
 	listen(listeningSocket, SOMAXCONN);
 
 	cout << "Server listening on " + hostname + ":" + std::to_string(port) << endl;
