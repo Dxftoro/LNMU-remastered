@@ -46,9 +46,9 @@ void cmdLs(const std::vector<std::string>& args, ClientManager* clients, size_t 
 
 void cmdHelp(const std::vector<std::string>& args, ClientManager* clients, size_t author) {
 	std::string msgText = "\n\nList of avaible commands:\n";
-	msgText += "/help \t- this command;\n";
-	msgText += "/tell [nickname]\t- write a private message to the specified client;\n";
-	msgText += "/ls \t - show all clients connected to the server.\n";
+	msgText += "/help -\tthis command;\n";
+	msgText += "/tell [nickname] -\twrite a private message to the specified client;\n";
+	msgText += "/ls -\tshow all clients connected to the server.\n";
 
 	Packet packet(serverChatName, msgText);
 	clients->sendTo(author, (char*)&packet, sizeof(packet), NULL);

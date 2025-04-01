@@ -68,9 +68,7 @@ void handleClient(ClientManager* clientManager, SOCKET client, size_t index,
 		Packet packet;
 		if (recv(client, (char*)&packet, sizeof(packet), NULL) > 0) {
 			if (strlen(packet.msg) > 0) {
-				if (packet.msg[0] == '/') {
-					cmd->handle(packet.msg, index);
-				}
+				if (packet.msg[0] == '/') cmd->handle(packet.msg, index);
 				else clientManager->sendAll((char*)&packet, sizeof(packet), NULL, index);
 			}
 		}
@@ -101,7 +99,7 @@ int main() {
 
 	ClientManager clientManager(serverSize);
 	CommandHandler cmd(&clientManager);
-	std::vector<std::thread*> connectionThreads;
+	std::vector<std::thread> connectionThreads;
 
 	cmd.setDefault(cmdDef);
 	cmd.add("/tell", cmdTell);
@@ -123,8 +121,8 @@ int main() {
 	size_t addrSize = sizeof(addr);
 
 	SOCKET listeningSocket = socket(AF_INET, SOCK_STREAM, NULL);
-	if (bind(listeningSocket, (SOCKADDR*)&addr, addrSize) != 0) {
-		cout << "BINDING ERROR " << WSAGetLastError() << endl;
+	if (bind(listeningSocket, (SOCKADDR*)&addr, addrSize)) {
+		cerr << "Binding error! Last code: " << WSAGetLastError() << endl;
 		return -1;
 	}
 	listen(listeningSocket, SOMAXCONN);
@@ -158,10 +156,10 @@ int main() {
 				strcpy(helloPacket.msg, sign.c_str());
 				send(clientConnection, (char*)&helloPacket, sizeof(helloPacket), NULL);
 
-				std::thread* clientHandler = new std::thread(handleClient, 
+				std::thread clientHandler = std::thread(handleClient, 
 					&clientManager, clientConnection, index, &cmd);
 
-				connectionThreads.push_back(clientHandler);
+				connectionThreads.push_back(std::move(clientHandler));
 
 				std::string connectionMsg = std::string(clientName) + " connected!";
 
@@ -175,10 +173,7 @@ int main() {
 	closesocket(listeningSocket);
 
 	for (size_t i = 0; i < connectionThreads.size(); i++) {
-		if (connectionThreads[i] != nullptr) {
-			connectionThreads[i]->detach();
-			delete connectionThreads[i];
-		}
+		connectionThreads[i].detach();
 	}
 
 	system("pause");
