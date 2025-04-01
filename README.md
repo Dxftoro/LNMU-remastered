@@ -16,4 +16,4 @@
 (символы < и > опускаются).
 
 ## [RU] Скачивание:
-Бета-версия пакета программ LNMU для Windows доступна для скачивания по этой ссылке: [GitHub](https://github.com/Dxftoro/LNMU-remastered/releases/download/v1.0/LNMU_remastered.zip)
+Пакет программ LNMU для Windows доступен для скачивания по этой ссылке: [GitHub](https://github.com/Dxftoro/LNMU-remastered/releases/download/v1.0/LNMU_remastered.zip)
