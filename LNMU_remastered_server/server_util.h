@@ -15,9 +15,7 @@ public:
 	~ClientManager();
 
 	size_t size() const;
-
 	size_t clientCount() const;
-
 	size_t addConnection(std::string name, SOCKET socket);
 
 	void removeConnection(size_t _index);
@@ -25,7 +23,6 @@ public:
 	Connection getConnection(size_t index) const;
 
 	void sendAll(char* msg, int len, int flags, size_t except) const;
-
 	inline void sendTo(size_t index, char* msg, int len, int flags) const;
 
 	size_t findByName(std::string name) const;
